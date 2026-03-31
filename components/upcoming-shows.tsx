@@ -46,7 +46,7 @@ export async function UpcomingShows() {
           {shows.map((show) => (
             <article
               key={show._id}
-              className="grid gap-4 px-6 py-6 md:grid-cols-[180px_1fr_auto] md:items-center"
+              className="grid gap-4 px-5 py-5 sm:px-6 sm:py-6 md:grid-cols-[180px_1fr_auto] md:items-center"
             >
               <div className="text-sm text-zinc-500">{formatDate(show.date)}</div>
 
@@ -58,7 +58,12 @@ export async function UpcomingShows() {
               </div>
 
               {show.ticketUrl ? (
-                <a href={show.ticketUrl} target="_blank" rel="noreferrer" className="button-secondary">
+                <a
+                  href={show.ticketUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="button-secondary w-full sm:w-auto md:justify-self-end"
+                >
                   <span>{show.status || "Mas info"}</span>
                 </a>
               ) : show.status ? (

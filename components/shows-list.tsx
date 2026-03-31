@@ -56,7 +56,7 @@ export async function ShowsList({currentPage, pageSize}: ShowsListProps) {
           {data.upcoming.map((show) => (
             <article
               key={show._id}
-              className="grid gap-4 px-6 py-6 md:grid-cols-[170px_1fr_auto] md:items-center"
+              className="grid gap-4 px-5 py-5 sm:px-6 sm:py-6 md:grid-cols-[170px_1fr_auto] md:items-center"
             >
               <div className="text-sm uppercase tracking-[0.16em] text-zinc-500">
                 {formatDate(show.date)}
@@ -69,12 +69,17 @@ export async function ShowsList({currentPage, pageSize}: ShowsListProps) {
                 </p>
               </div>
 
-              <div className="flex items-center gap-3">
-                <span className="hidden text-sm text-zinc-500 sm:inline">
+              <div className="flex flex-col items-start gap-2 sm:flex-row sm:items-center sm:gap-3 md:justify-self-end">
+                <span className="text-sm text-zinc-500">
                   {show.status}
                 </span>
                 {show.ticketUrl ? (
-                  <a href={show.ticketUrl} target="_blank" rel="noreferrer" className="button-secondary">
+                  <a
+                    href={show.ticketUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="button-secondary w-full sm:w-auto"
+                  >
                     <span>Mas info</span>
                   </a>
                 ) : null}

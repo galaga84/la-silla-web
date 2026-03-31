@@ -150,10 +150,7 @@ export function MusicPlayer() {
         <div className="container-site py-2.5">
           <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
             <div className="min-w-0">
-              <p className="text-[10px] uppercase tracking-[0.28em] text-zinc-500">
-                Reproductor
-              </p>
-              <div className="mt-1 flex items-center gap-2">
+              <div className="flex items-center gap-2">
                 <button
                   type="button"
                   onClick={() => handleTrackChange(currentTrackIndex - 1)}
