@@ -6,6 +6,8 @@ const builder = imageUrlBuilder({
   dataset,
 });
 
-export function urlFor(source: unknown) {
+type ImageSource = Parameters<typeof builder.image>[0];
+
+export function urlFor(source: ImageSource) {
   return builder.image(source);
 }

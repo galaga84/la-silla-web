@@ -1,6 +1,22 @@
 import { ArtistsGrid } from "@/components/artists-grid";
 
-export default function ArtistasPage() {
+const PAGE_SIZE = 6;
+
+type ArtistasPageProps = {
+  searchParams?: Promise<{
+    page?: string;
+  }>;
+};
+
+function parsePage(page?: string) {
+  const value = Number(page);
+  return Number.isInteger(value) && value > 0 ? value : 1;
+}
+
+export default async function ArtistasPage({searchParams}: ArtistasPageProps) {
+  const params = searchParams ? await searchParams : undefined;
+  const currentPage = parsePage(params?.page);
+
   return (
     <main className="container-site section-space">
       <header className="max-w-3xl">
@@ -12,7 +28,7 @@ export default function ArtistasPage() {
         </p>
       </header>
 
-      <ArtistsGrid />
+      <ArtistsGrid currentPage={currentPage} pageSize={PAGE_SIZE} />
     </main>
   );
 }

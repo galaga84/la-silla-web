@@ -65,7 +65,7 @@ export async function HomeNewsPreview() {
               <div className="bg-white p-4 sm:p-6">
                 <time className="block text-xs uppercase tracking-[0.18em] text-gray-500">
                   {formatDate(post.publishedAt)}
-                  {post.category ? ` · ${post.category}` : ""}
+                  {post.category ? `  -  ${post.category}` : ""}
                 </time>
 
                 <Link href={`/noticias/${post.slug}`}>

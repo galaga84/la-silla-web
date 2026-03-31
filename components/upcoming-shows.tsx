@@ -1,34 +1,38 @@
 import Link from "next/link";
+import {client} from "@/sanity/lib/client";
+import {upcomingShowsQuery} from "@/sanity/lib/queries";
 
-const shows = [
-  {
-    date: "12 Abr 2026",
-    city: "Santiago",
-    venue: "Sala Metrónomo",
-    artist: "Artista Uno",
-  },
-  {
-    date: "20 Abr 2026",
-    city: "Valparaíso",
-    venue: "El Huevo",
-    artist: "Artista Tres",
-  },
-  {
-    date: "03 May 2026",
-    city: "Concepción",
-    venue: "Teatro Biobío",
-    artist: "Artista Dos",
-  },
-];
+type ShowItem = {
+  _id: string;
+  title: string;
+  artist?: string;
+  date: string;
+  city?: string;
+  venue?: string;
+  ticketUrl?: string;
+  status?: string;
+};
 
-export function UpcomingShows() {
+function formatDate(dateString: string) {
+  return new Intl.DateTimeFormat("es-CL", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+  }).format(new Date(dateString));
+}
+
+export async function UpcomingShows() {
+  const shows = await client.fetch<ShowItem[]>(upcomingShowsQuery, {
+    now: new Date().toISOString(),
+  });
+
   return (
     <section>
-  <div className="container-site border-t border-black/10 section-space">
+      <div className="container-site border-t border-black/10 section-space">
         <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
           <div>
             <p className="eyebrow">Fechas</p>
-            <h2 className="heading-lg mt-3">Próximas presentaciones</h2>
+            <h2 className="heading-lg mt-3">Proximas presentaciones</h2>
           </div>
 
           <div>
@@ -41,17 +45,25 @@ export function UpcomingShows() {
         <div className="mt-10 divide-y divide-black/10 rounded-2xl border border-black/10 bg-zinc-50">
           {shows.map((show) => (
             <article
-              key={`${show.date}-${show.artist}`}
-              className="grid gap-4 px-6 py-6 md:grid-cols-[180px_1fr] md:items-center"
+              key={show._id}
+              className="grid gap-4 px-6 py-6 md:grid-cols-[180px_1fr_auto] md:items-center"
             >
-              <div className="text-sm text-zinc-500">{show.date}</div>
+              <div className="text-sm text-zinc-500">{formatDate(show.date)}</div>
 
               <div>
-                <h3 className="text-xl font-semibold text-black">{show.artist}</h3>
+                <h3 className="text-xl font-semibold text-black">{show.artist || show.title}</h3>
                 <p className="mt-1 text-sm text-zinc-600">
-                  {show.city} · {show.venue}
+                  {[show.city, show.venue].filter(Boolean).join(" - ")}
                 </p>
               </div>
+
+              {show.ticketUrl ? (
+                <a href={show.ticketUrl} target="_blank" rel="noreferrer" className="button-secondary">
+                  <span>{show.status || "Mas info"}</span>
+                </a>
+              ) : show.status ? (
+                <span className="text-sm text-zinc-500">{show.status}</span>
+              ) : null}
             </article>
           ))}
         </div>
