@@ -119,7 +119,6 @@ export function MusicPlayer() {
     if (audioRef.current.paused) {
       try {
         await audioRef.current.play();
-        setIsPlaying(true);
       } catch {
         setIsPlaying(false);
       }
@@ -127,7 +126,6 @@ export function MusicPlayer() {
     }
 
     audioRef.current.pause();
-    setIsPlaying(false);
   }
 
   function enforceNormalPlayback() {
@@ -150,8 +148,13 @@ export function MusicPlayer() {
         ref={audioRef}
         src={currentTrack.src}
         preload="auto"
+        playsInline
         onLoadedMetadata={handleLoadedMetadata}
-        onPlay={enforceNormalPlayback}
+        onPlay={() => {
+          enforceNormalPlayback();
+          setIsPlaying(true);
+        }}
+        onPause={() => setIsPlaying(false)}
         onRateChange={enforceNormalPlayback}
         onTimeUpdate={handleTimeUpdate}
         onEnded={() => handleTrackChange(currentTrackIndex + 1)}
