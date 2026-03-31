@@ -87,7 +87,7 @@ const socialLinks = [
 export function SiteFooter() {
   return (
     <footer className="mt-16 border-t border-black/10 bg-gradient-to-r from-zinc-100 via-white to-zinc-100">
-      <div className="container-site py-10">
+      <div className="container-site py-10 md:pb-24">
         <div className="flex justify-center gap-6 text-zinc-400">
           {socialLinks.map((item) => (
             <Link

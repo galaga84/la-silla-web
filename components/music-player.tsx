@@ -10,19 +10,9 @@ type Track = {
 
 const tracks: Track[] = [
   {
-    title: "Demo Track 01",
+    title: "Punsetes",
     artist: "La Silla Sessions",
-    src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
-  },
-  {
-    title: "Demo Track 02",
-    artist: "La Silla Sessions",
-    src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
-  },
-  {
-    title: "Demo Track 03",
-    artist: "La Silla Sessions",
-    src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3",
+    src: "/audio/punsetes.mp3",
   },
 ];
 
@@ -57,11 +47,15 @@ export function MusicPlayer() {
   const [duration, setDuration] = useState(0);
   const [volume, setVolume] = useState(() => getStoredNumber("music-player-volume", 0.7));
   const currentTrack = tracks[currentTrackIndex];
+  const volumePercentage = Math.round(volume * 100);
+  const didRestoreTimeRef = useRef(false);
+  const storedTimeRef = useRef(currentTime);
 
   useEffect(() => {
     if (!audioRef.current) return;
-    audioRef.current.currentTime = currentTime;
-  }, [currentTrackIndex, currentTime]);
+    audioRef.current.currentTime = storedTimeRef.current;
+    didRestoreTimeRef.current = true;
+  }, [currentTrackIndex]);
 
   useEffect(() => {
     if (!audioRef.current) return;
@@ -74,11 +68,14 @@ export function MusicPlayer() {
   }, [currentTrackIndex]);
 
   useEffect(() => {
+    storedTimeRef.current = currentTime;
     window.localStorage.setItem("music-player-time", String(currentTime));
   }, [currentTime]);
 
   useEffect(() => {
     if (!audioRef.current) return;
+    audioRef.current.playbackRate = 1;
+    audioRef.current.defaultPlaybackRate = 1;
 
     if (isPlaying) {
       void audioRef.current.play().catch(() => {
@@ -92,6 +89,12 @@ export function MusicPlayer() {
 
   function handleLoadedMetadata() {
     if (!audioRef.current) return;
+    audioRef.current.playbackRate = 1;
+    audioRef.current.defaultPlaybackRate = 1;
+    if (!didRestoreTimeRef.current && storedTimeRef.current > 0) {
+      audioRef.current.currentTime = storedTimeRef.current;
+      didRestoreTimeRef.current = true;
+    }
     setDuration(audioRef.current.duration || 0);
   }
 
@@ -104,6 +107,7 @@ export function MusicPlayer() {
     const safeIndex = (nextIndex + tracks.length) % tracks.length;
     setCurrentTrackIndex(safeIndex);
     setCurrentTime(0);
+    didRestoreTimeRef.current = false;
 
     if (audioRef.current) {
       audioRef.current.currentTime = 0;
@@ -116,56 +120,128 @@ export function MusicPlayer() {
     setCurrentTime(value);
   }
 
+  function enforceNormalPlayback() {
+    if (!audioRef.current) return;
+    if (audioRef.current.playbackRate !== 1) {
+      audioRef.current.playbackRate = 1;
+    }
+    if (audioRef.current.defaultPlaybackRate !== 1) {
+      audioRef.current.defaultPlaybackRate = 1;
+    }
+  }
+
+  const controlBaseClassName =
+    "flex h-9 w-9 items-center justify-center rounded-full border border-black/10 bg-white text-black transition hover:border-black/20 hover:bg-zinc-50";
+
   return (
     <>
       <audio
         ref={audioRef}
         src={currentTrack.src}
+        preload="auto"
         onLoadedMetadata={handleLoadedMetadata}
+        onPlay={enforceNormalPlayback}
+        onRateChange={enforceNormalPlayback}
         onTimeUpdate={handleTimeUpdate}
         onEnded={() => handleTrackChange(currentTrackIndex + 1)}
       />
 
-      <div className="fixed inset-x-0 bottom-0 z-50 border-t border-black/10 bg-white/95 backdrop-blur">
-        <div className="container-site py-4">
-          <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+      <div className="fixed inset-x-0 bottom-0 z-50 hidden border-t border-black/10 bg-white/95 backdrop-blur md:block">
+        <div className="container-site py-2.5">
+          <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
             <div className="min-w-0">
-              <p className="text-xs uppercase tracking-[0.28em] text-zinc-500">
+              <p className="text-[10px] uppercase tracking-[0.28em] text-zinc-500">
                 Reproductor
               </p>
-              <div className="mt-1 flex items-center gap-3">
+              <div className="mt-1 flex items-center gap-2">
                 <button
                   type="button"
                   onClick={() => handleTrackChange(currentTrackIndex - 1)}
-                  className="rounded-full border border-black/10 px-3 py-2 text-sm text-black transition hover:border-black/25"
+                  className={controlBaseClassName}
+                  aria-label="Pista anterior"
                 >
-                  Prev
+                  <svg
+                    className="h-5 w-5"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke="currentColor"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="m15 19-7-7 7-7"
+                    />
+                  </svg>
                 </button>
                 <button
                   type="button"
                   onClick={() => setIsPlaying((value) => !value)}
-                  className="rounded-full bg-black px-4 py-2 text-sm text-white transition hover:bg-[#E8452C]"
+                  className="flex h-9 w-9 items-center justify-center rounded-full bg-black text-white transition hover:bg-[#E8452C]"
+                  aria-label={isPlaying ? "Pausar" : "Reproducir"}
                 >
-                  {isPlaying ? "Pause" : "Play"}
+                  {isPlaying ? (
+                    <span className="flex items-center gap-1.5" aria-hidden="true">
+                      <span className="h-4 w-1 rounded-full bg-current" />
+                      <span className="h-4 w-1 rounded-full bg-current" />
+                    </span>
+                  ) : (
+                    <svg
+                      className="h-5 w-5"
+                      aria-hidden="true"
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      fill="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M8.6 5.2A1 1 0 0 0 7 6v12a1 1 0 0 0 1.6.8l8-6a1 1 0 0 0 0-1.6l-8-6Z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                  )}
                 </button>
                 <button
                   type="button"
                   onClick={() => handleTrackChange(currentTrackIndex + 1)}
-                  className="rounded-full border border-black/10 px-3 py-2 text-sm text-black transition hover:border-black/25"
+                  className={controlBaseClassName}
+                  aria-label="Siguiente pista"
                 >
-                  Next
+                  <svg
+                    className="h-5 w-5"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke="currentColor"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="m9 5 7 7-7 7"
+                    />
+                  </svg>
                 </button>
               </div>
             </div>
 
-            <div className="min-w-0 flex-1 lg:px-6">
-              <p className="truncate text-sm font-semibold text-black">
+            <div className="min-w-0 flex-1 lg:px-5">
+              <p className="truncate text-sm font-semibold leading-none text-black">
                 {currentTrack.title}
               </p>
-              <p className="truncate text-sm text-zinc-500">{currentTrack.artist}</p>
+              <p className="mt-1 truncate text-xs text-zinc-500">{currentTrack.artist}</p>
 
-              <div className="mt-3 flex items-center gap-3">
-                <span className="w-10 text-xs text-zinc-500">
+              <div className="mt-2 flex items-center gap-2.5">
+                <span className="w-9 text-[11px] text-zinc-500">
                   {formatTime(currentTime)}
                 </span>
                 <input
@@ -177,14 +253,17 @@ export function MusicPlayer() {
                   onChange={(event) => handleSeek(Number(event.target.value))}
                   className="w-full accent-[#E8452C]"
                 />
-                <span className="w-10 text-right text-xs text-zinc-500">
+                <span className="w-9 text-right text-[11px] text-zinc-500">
                   {formatTime(duration)}
                 </span>
               </div>
             </div>
 
-            <div className="flex items-center gap-3 lg:w-44">
-              <label htmlFor="player-volume" className="text-xs uppercase tracking-[0.2em] text-zinc-500">
+            <div className="flex items-center gap-2 rounded-full border border-black/10 bg-white/90 px-3 py-2 shadow-[0_10px_24px_rgba(17,17,17,0.06)] lg:w-52">
+              <label
+                htmlFor="player-volume"
+                className="text-[10px] uppercase tracking-[0.2em] text-zinc-500"
+              >
                 Vol
               </label>
               <input
@@ -197,6 +276,9 @@ export function MusicPlayer() {
                 onChange={(event) => setVolume(Number(event.target.value))}
                 className="w-full accent-[#E8452C]"
               />
+              <span className="min-w-9 text-right text-[11px] font-medium tabular-nums text-zinc-500">
+                {volumePercentage}%
+              </span>
             </div>
           </div>
         </div>
