@@ -36,20 +36,33 @@ function formatTime(value: number) {
 
 export function MusicPlayer() {
   const audioRef = useRef<HTMLAudioElement | null>(null);
-  const [currentTrackIndex, setCurrentTrackIndex] = useState(() => {
-    const value = getStoredNumber("music-player-track", 0);
-    return Number.isInteger(value) && value >= 0 && value < tracks.length ? value : 0;
-  });
+  const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [currentTime, setCurrentTime] = useState(() =>
-    getStoredNumber("music-player-time", 0),
-  );
+  const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
-  const [volume, setVolume] = useState(() => getStoredNumber("music-player-volume", 0.7));
+  const [volume, setVolume] = useState(0.7);
   const currentTrack = tracks[currentTrackIndex];
   const volumePercentage = Math.round(volume * 100);
   const didRestoreTimeRef = useRef(false);
-  const storedTimeRef = useRef(currentTime);
+  const storedTimeRef = useRef(0);
+
+  useEffect(() => {
+    const storedTrack = getStoredNumber("music-player-track", 0);
+    const safeTrack =
+      Number.isInteger(storedTrack) && storedTrack >= 0 && storedTrack < tracks.length
+        ? storedTrack
+        : 0;
+    const storedTime = getStoredNumber("music-player-time", 0);
+    const storedVolume = getStoredNumber("music-player-volume", 0.7);
+
+    storedTimeRef.current = storedTime;
+
+    queueMicrotask(() => {
+      setCurrentTrackIndex(safeTrack);
+      setCurrentTime(storedTime);
+      setVolume(storedVolume);
+    });
+  }, []);
 
   useEffect(() => {
     if (!audioRef.current) return;
