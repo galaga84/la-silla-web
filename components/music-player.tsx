@@ -45,6 +45,7 @@ export function MusicPlayer() {
   const volumePercentage = Math.round(volume * 100);
   const didRestoreTimeRef = useRef(false);
   const storedTimeRef = useRef(0);
+  const lastVolumeRef = useRef(0.7);
 
   useEffect(() => {
     const storedTrack = getStoredNumber("music-player-track", 0);
@@ -61,6 +62,7 @@ export function MusicPlayer() {
       setCurrentTrackIndex(safeTrack);
       setCurrentTime(storedTime);
       setVolume(storedVolume);
+      lastVolumeRef.current = storedVolume > 0 ? storedVolume : 0.7;
     });
   }, []);
 
@@ -74,6 +76,9 @@ export function MusicPlayer() {
     if (!audioRef.current) return;
     audioRef.current.volume = volume;
     window.localStorage.setItem("music-player-volume", String(volume));
+    if (volume > 0) {
+      lastVolumeRef.current = volume;
+    }
   }, [volume]);
 
   useEffect(() => {
@@ -139,6 +144,16 @@ export function MusicPlayer() {
     }
 
     audioRef.current.pause();
+  }
+
+  function handleToggleMute() {
+    if (volume === 0) {
+      setVolume(lastVolumeRef.current > 0 ? lastVolumeRef.current : 0.7);
+      return;
+    }
+
+    lastVolumeRef.current = volume;
+    setVolume(0);
   }
 
   function enforceNormalPlayback() {
@@ -224,6 +239,51 @@ export function MusicPlayer() {
               <p className="mt-0.5 truncate text-xs text-zinc-500">
                 {formatTime(currentTime)} / {formatTime(duration)}
               </p>
+            </button>
+
+            <button
+              type="button"
+              onClick={handleToggleMute}
+              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-black/10 bg-white text-black transition hover:border-black/20 hover:bg-zinc-50"
+              aria-label={volume === 0 ? "Activar sonido" : "Silenciar"}
+            >
+              {volume === 0 ? (
+                <svg
+                  className="h-5 w-5"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M15.5 8.43A4.985 4.985 0 0 1 17 12c0 1.126-.5 2.5-1.5 3.5m2.864-9.864A8.972 8.972 0 0 1 21 12c0 2.023-.5 4.5-2.5 6M7.8 7.5l2.56-2.133a1 1 0 0 1 1.64.768V12m0 4.5v1.365a1 1 0 0 1-1.64.768L6 15H4a1 1 0 0 1-1-1v-4a1 1 0 0 1 1-1m1-4 14 14"
+                  />
+                </svg>
+              ) : (
+                <svg
+                  className="h-5 w-5"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M17.5 8.43A4.985 4.985 0 0 1 19 12a4.984 4.984 0 0 1-1.43 3.5M14 6.135v11.73a1 1 0 0 1-1.64.768L8 15H6a1 1 0 0 1-1-1v-4a1 1 0 0 1 1-1h2l4.36-3.633a1 1 0 0 1 1.64.768Z"
+                  />
+                </svg>
+              )}
             </button>
           </div>
         </div>
