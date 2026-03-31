@@ -27,8 +27,8 @@ export async function HomeNewsPreview() {
   const posts = await client.fetch<HomeNewsItem[]>(homeNewsQuery);
 
   return (
-    <section>
-      <div className="container-site border-t border-black/10 section-space">
+    <section className="border-t border-black/10 bg-white">
+      <div className="container-site section-space">
         <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
           <div className="max-w-3xl">
             <p className="eyebrow">Noticias</p>
@@ -49,7 +49,7 @@ export async function HomeNewsPreview() {
           {posts.map((post) => (
             <article
               key={post._id}
-              className="overflow-hidden rounded-lg shadow-sm transition hover:shadow-lg"
+              className="group overflow-hidden rounded-[1.75rem] border border-black/8 bg-white shadow-[0_12px_34px_rgba(17,17,17,0.06)] transition hover:-translate-y-0.5 hover:shadow-[0_18px_48px_rgba(17,17,17,0.1)]"
             >
               <div className="relative h-56 w-full bg-zinc-100">
                 {post.mainImage ? (
@@ -57,7 +57,7 @@ export async function HomeNewsPreview() {
                     src={urlFor(post.mainImage).width(1200).height(700).url()}
                     alt={post.title}
                     fill
-                    className="object-cover"
+                    className="object-cover transition duration-500 ease-out group-hover:scale-[1.04]"
                   />
                 ) : null}
               </div>

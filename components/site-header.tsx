@@ -72,30 +72,49 @@ export function SiteHeader() {
 
         <button
           type="button"
-          aria-label={isOpen ? "Cerrar menú" : "Abrir menú"}
+          aria-label={isOpen ? "Cerrar menu" : "Abrir menu"}
           aria-expanded={isOpen}
           onClick={() => setIsOpen(!isOpen)}
           className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-black/10 text-black transition hover:border-black/30 md:hidden"
         >
-          <span className="sr-only">{isOpen ? "Cerrar menú" : "Abrir menú"}</span>
+          <span className="sr-only">{isOpen ? "Cerrar menu" : "Abrir menu"}</span>
 
-          <span className="relative block h-5 w-5">
-            <span
-              className={`absolute left-1/2 top-1/2 h-[2px] w-5 -translate-x-1/2 bg-black transition-all duration-300 ${
-                isOpen ? "-translate-y-1/2 rotate-45" : "-translate-y-[7px]"
-              }`}
-            />
-            <span
-              className={`absolute left-1/2 top-1/2 h-[2px] w-5 -translate-x-1/2 -translate-y-1/2 bg-black transition-all duration-300 ${
-                isOpen ? "opacity-0" : "opacity-100"
-              }`}
-            />
-            <span
-              className={`absolute left-1/2 top-1/2 h-[2px] w-5 -translate-x-1/2 bg-black transition-all duration-300 ${
-                isOpen ? "-translate-y-1/2 -rotate-45" : "translate-y-[7px]"
-              }`}
-            />
-          </span>
+          {isOpen ? (
+            <svg
+              className="h-5 w-5"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke="currentColor"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M6 18 18 6m0 12L6 6"
+              />
+            </svg>
+          ) : (
+            <svg
+              className="h-5 w-5"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke="currentColor"
+                strokeLinecap="round"
+                strokeWidth="2"
+                d="M5 7h14M5 12h14M5 17h14"
+              />
+            </svg>
+          )}
         </button>
       </div>
 
