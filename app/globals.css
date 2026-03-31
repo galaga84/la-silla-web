@@ -1,0 +1,62 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #111111;
+  --muted: #52525b;
+  --border: rgba(17, 17, 17, 0.1);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+}
+
+@layer components {
+  .container-site {
+    @apply mx-auto w-full max-w-7xl px-6;
+  }
+
+  .section-space {
+    @apply py-20;
+  }
+
+  .eyebrow {
+    @apply text-xs uppercase tracking-[0.35em] text-zinc-500;
+  }
+
+  .heading-xl {
+    @apply text-5xl font-semibold tracking-tight sm:text-6xl lg:text-7xl;
+    font-family: var(--font-display);
+  }
+
+  .heading-lg {
+    @apply text-4xl font-semibold tracking-tight;
+    font-family: var(--font-display);
+  }
+
+  .body-lg {
+    @apply text-base leading-7 text-zinc-600 sm:text-lg;
+  }
+
+  .body-md {
+    @apply text-sm leading-6 text-zinc-600;
+  }
+
+  .card-dark {
+    @apply rounded-2xl border border-black/10 bg-zinc-50 p-6;
+  }
+
+ .button-secondary {
+  @apply inline-flex items-center justify-center rounded-full p-[2px] text-sm font-medium transition hover:scale-[1.01];
+  background: linear-gradient(90deg, #26285b 0%, #b8599e 52%, #e8462d 100%);
+}
+
+.button-secondary > span {
+  @apply inline-flex items-center rounded-full bg-white px-6 py-3 text-black;
+}
+}
