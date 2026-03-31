@@ -9,7 +9,7 @@ export default function WebsiteLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="min-h-screen bg-white pb-0 text-black">
+    <div className="min-h-screen bg-white pb-16 text-black md:pb-0">
       <AnnouncementBar />
       <SiteHeader />
       {children}

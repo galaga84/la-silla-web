@@ -132,6 +132,7 @@ export function MusicPlayer() {
 
   const controlBaseClassName =
     "flex h-9 w-9 items-center justify-center rounded-full border border-black/10 bg-white text-black transition hover:border-black/20 hover:bg-zinc-50";
+  const mobileProgress = duration > 0 ? Math.min((currentTime / duration) * 100, 100) : 0;
 
   return (
     <>
@@ -145,6 +146,62 @@ export function MusicPlayer() {
         onTimeUpdate={handleTimeUpdate}
         onEnded={() => handleTrackChange(currentTrackIndex + 1)}
       />
+
+      <div className="fixed inset-x-0 bottom-0 z-50 border-t border-black/10 bg-white/96 shadow-[0_-12px_30px_rgba(17,17,17,0.08)] backdrop-blur md:hidden">
+        <div className="h-1 w-full bg-black/6">
+          <div
+            className="h-full bg-[#E8452C] transition-[width] duration-300"
+            style={{width: `${mobileProgress}%`}}
+          />
+        </div>
+
+        <div className="container-site py-2.5">
+          <div className="flex items-center gap-3">
+            <button
+              type="button"
+              onClick={() => setIsPlaying((value) => !value)}
+              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-black text-white transition hover:bg-[#E8452C]"
+              aria-label={isPlaying ? "Pausar" : "Reproducir"}
+            >
+              {isPlaying ? (
+                <span className="flex items-center gap-1.5" aria-hidden="true">
+                  <span className="h-4 w-1 rounded-full bg-current" />
+                  <span className="h-4 w-1 rounded-full bg-current" />
+                </span>
+              ) : (
+                <svg
+                  className="h-5 w-5"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M8.6 5.2A1 1 0 0 0 7 6v12a1 1 0 0 0 1.6.8l8-6a1 1 0 0 0 0-1.6l-8-6Z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              )}
+            </button>
+
+            <button
+              type="button"
+              className="min-w-0 flex-1 text-left"
+              aria-label="Informacion de reproduccion"
+            >
+              <p className="truncate text-sm font-semibold leading-tight text-black">
+                {currentTrack.title}
+              </p>
+              <p className="mt-0.5 truncate text-xs text-zinc-500">
+                {formatTime(currentTime)} / {formatTime(duration)}
+              </p>
+            </button>
+          </div>
+        </div>
+      </div>
 
       <div className="fixed inset-x-0 bottom-0 z-50 hidden border-t border-black/10 bg-white/95 backdrop-blur md:block">
         <div className="container-site py-2.5">
