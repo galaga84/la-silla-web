@@ -2,9 +2,15 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { type ReactNode, useState } from "react";
 
-const navItems = [
+type NavItem = {
+  href: string;
+  label: string;
+  icon?: ReactNode;
+};
+
+const navItems: NavItem[] = [
   { href: "/", label: "Inicio" },
   { href: "/artistas", label: "Artistas" },
   { href: "/lanzamientos", label: "Lanzamientos" },
@@ -44,7 +50,7 @@ export function SiteHeader() {
               href={item.href}
               className="flex items-center gap-2 text-sm text-zinc-600 transition hover:text-[#E8452C]"
             >
-              {"icon" in item ? item.icon : null}
+              {item.icon ?? null}
               <span>{item.label}</span>
             </Link>
           ))}
@@ -108,7 +114,7 @@ export function SiteHeader() {
                 onClick={() => setIsOpen(false)}
                 className="flex items-center gap-3 border-b border-black/5 py-4 text-base text-zinc-700 transition hover:text-[#E8452C]"
               >
-                {"icon" in item ? item.icon : null}
+                {item.icon ?? null}
                 <span>{item.label}</span>
               </Link>
             ))}
