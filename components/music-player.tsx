@@ -76,15 +76,6 @@ export function MusicPlayer() {
     if (!audioRef.current) return;
     audioRef.current.playbackRate = 1;
     audioRef.current.defaultPlaybackRate = 1;
-
-    if (isPlaying) {
-      void audioRef.current.play().catch(() => {
-        setIsPlaying(false);
-      });
-      return;
-    }
-
-    audioRef.current.pause();
   }, [isPlaying, currentTrackIndex]);
 
   function handleLoadedMetadata() {
@@ -118,6 +109,25 @@ export function MusicPlayer() {
     if (!audioRef.current) return;
     audioRef.current.currentTime = value;
     setCurrentTime(value);
+  }
+
+  async function handleTogglePlayback() {
+    if (!audioRef.current) return;
+
+    enforceNormalPlayback();
+
+    if (audioRef.current.paused) {
+      try {
+        await audioRef.current.play();
+        setIsPlaying(true);
+      } catch {
+        setIsPlaying(false);
+      }
+      return;
+    }
+
+    audioRef.current.pause();
+    setIsPlaying(false);
   }
 
   function enforceNormalPlayback() {
@@ -159,7 +169,7 @@ export function MusicPlayer() {
           <div className="flex items-center gap-3">
             <button
               type="button"
-              onClick={() => setIsPlaying((value) => !value)}
+              onClick={handleTogglePlayback}
               className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-black text-white transition hover:bg-[#E8452C]"
               aria-label={isPlaying ? "Pausar" : "Reproducir"}
             >
@@ -234,7 +244,7 @@ export function MusicPlayer() {
                 </button>
                 <button
                   type="button"
-                  onClick={() => setIsPlaying((value) => !value)}
+                  onClick={handleTogglePlayback}
                   className="flex h-9 w-9 items-center justify-center rounded-full bg-black text-white transition hover:bg-[#E8452C]"
                   aria-label={isPlaying ? "Pausar" : "Reproducir"}
                 >
