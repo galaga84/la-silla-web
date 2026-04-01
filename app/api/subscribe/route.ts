@@ -65,7 +65,7 @@ export async function POST(request: Request) {
     });
 
     return NextResponse.json(
-      {message: "Gracias. Ya quedaste suscrito a nuestras noticias."},
+      {message: "Gracias. Ya te suscribiste a nuestras noticias."},
       {status: 201},
     );
   } catch {
