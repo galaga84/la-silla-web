@@ -10,9 +10,9 @@ type Track = {
 
 const tracks: Track[] = [
   {
-    title: "Punsetes",
+    title: "Moscas flotantes",
     artist: "La Silla Sessions",
-    src: "/audio/punsetes.mp3",
+    src: "/audio/Moscas flotantes - Bitcoins.mp3",
   },
 ];
 
