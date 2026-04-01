@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
+import { unstable_noStore as noStore } from "next/cache";
 import {client} from "@/sanity/lib/client";
 import {urlFor} from "@/sanity/lib/image";
 import {homeNewsQuery} from "@/sanity/lib/queries";
@@ -25,6 +26,7 @@ function formatDate(dateString?: string) {
 }
 
 export async function HomeNewsPreview() {
+  noStore();
   const posts = await client.fetch<HomeNewsItem[]>(homeNewsQuery);
 
   return (
