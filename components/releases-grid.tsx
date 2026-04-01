@@ -64,10 +64,10 @@ export async function ReleasesGrid({
                 src={urlFor(release.cover).width(1200).height(1200).url()}
                 width={1200}
                 height={1200}
-                className="h-64 w-full rounded-2xl object-cover sm:h-80 lg:h-96"
+                className="shape-media h-64 w-full object-cover sm:h-80 lg:h-96"
               />
             ) : (
-              <div className="h-64 w-full rounded-2xl bg-zinc-200 sm:h-80 lg:h-96" />
+              <div className="shape-media h-64 w-full bg-zinc-200 sm:h-80 lg:h-96" />
             )}
 
             <div className="mt-4 flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-zinc-500">
@@ -76,7 +76,7 @@ export async function ReleasesGrid({
               <span>{release.year}</span>
             </div>
 
-            <h3 className="mt-3 text-lg font-bold text-gray-900 sm:text-xl">
+            <h3 className="card-title mt-3 text-lg text-gray-900 sm:text-xl">
               {release.title}
             </h3>
 

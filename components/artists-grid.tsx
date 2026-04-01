@@ -51,7 +51,7 @@ export async function ArtistsGrid({currentPage, pageSize}: ArtistsGridProps) {
           <Link
             key={artist._id}
             href={`/artistas/${artist.slug}`}
-            className="group relative block min-h-[520px] overflow-hidden rounded-3xl bg-black"
+            className="group shape-panel relative block min-h-[520px] overflow-hidden bg-black"
           >
             {artist.image ? (
               <Image
@@ -67,7 +67,7 @@ export async function ArtistsGrid({currentPage, pageSize}: ArtistsGridProps) {
                 {artist.genre}
               </p>
 
-              <p className="mt-2 text-2xl font-bold text-white sm:text-3xl">
+              <p className="card-title-light mt-2 text-2xl sm:text-3xl">
                 {artist.name}
               </p>
 

@@ -42,7 +42,7 @@ export async function UpcomingShows() {
           </div>
         </div>
 
-        <div className="mt-10 divide-y divide-black/10 rounded-2xl border border-black/10 bg-zinc-50">
+        <div className="shape-frame mt-10 divide-y divide-black/10 border border-black/10 bg-zinc-50">
           {shows.map((show) => (
             <article
               key={show._id}
@@ -51,7 +51,7 @@ export async function UpcomingShows() {
               <div className="text-sm text-zinc-500">{formatDate(show.date)}</div>
 
               <div>
-                <h3 className="text-xl font-semibold text-black">{show.artist || show.title}</h3>
+                <h3 className="card-title text-xl text-black">{show.artist || show.title}</h3>
                 <p className="mt-1 text-sm text-zinc-600">
                   {[show.city, show.venue].filter(Boolean).join(" - ")}
                 </p>

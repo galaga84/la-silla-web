@@ -41,7 +41,7 @@ export default async function ReleaseDetailPage({params}: ReleasePageProps) {
   return (
     <main className="container-site section-space">
       <div className="grid gap-10 lg:grid-cols-[360px_1fr]">
-        <div className="relative aspect-square overflow-hidden rounded-3xl border border-white/10 bg-zinc-900">
+        <div className="shape-panel relative aspect-square overflow-hidden border border-white/10 bg-zinc-900">
           {release.cover ? (
             <Image
               src={urlFor(release.cover).width(1200).height(1200).url()}

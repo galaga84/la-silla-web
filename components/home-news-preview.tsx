@@ -27,8 +27,8 @@ export async function HomeNewsPreview() {
   const posts = await client.fetch<HomeNewsItem[]>(homeNewsQuery);
 
   return (
-    <section className="border-t border-black/10 bg-white">
-      <div className="container-site section-space">
+    <section className="bg-white">
+      <div className="container-site border-t border-black/10 section-space">
         <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
           <div className="max-w-3xl">
             <p className="eyebrow">Noticias</p>
@@ -49,9 +49,9 @@ export async function HomeNewsPreview() {
           {posts.map((post) => (
             <article
               key={post._id}
-              className="group overflow-hidden rounded-[1.75rem] border border-black/8 bg-white shadow-[0_12px_34px_rgba(17,17,17,0.06)] transition hover:-translate-y-0.5 hover:shadow-[0_18px_48px_rgba(17,17,17,0.1)]"
+              className="group shape-panel overflow-hidden border border-black/8 bg-white shadow-[0_12px_34px_rgba(17,17,17,0.06)]"
             >
-              <div className="relative h-56 w-full bg-zinc-100">
+              <div className="relative mb-4 h-56 w-full overflow-hidden bg-zinc-100">
                 {post.mainImage ? (
                   <Image
                     src={urlFor(post.mainImage).width(1200).height(700).url()}
@@ -69,7 +69,7 @@ export async function HomeNewsPreview() {
                 </time>
 
                 <Link href={`/noticias/${post.slug}`}>
-                  <h3 className="mt-3 text-lg text-gray-900 transition hover:text-[#E8452C] sm:text-xl">
+                  <h3 className="card-title mt-3 text-lg text-gray-900 transition group-hover:text-[#E8452C] sm:text-xl">
                     {post.title}
                   </h3>
                 </Link>

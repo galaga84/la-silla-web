@@ -32,13 +32,13 @@ export function PressResources() {
         {pressItems.map((item) => (
           <article
             key={item.title}
-            className="rounded-3xl border border-black/10 bg-zinc-50 p-6 transition hover:border-black/20 hover:bg-zinc-100/80"
+            className="shape-panel border border-black/10 bg-zinc-50 p-6 transition hover:border-black/20 hover:bg-zinc-100/80"
           >
             <div className="flex items-center justify-between gap-4">
               <h2 className="text-2xl font-semibold tracking-tight text-black">
                 {item.title}
               </h2>
-              <span className="rounded-full border border-black/10 px-3 py-1 text-xs uppercase tracking-[0.2em] text-zinc-500">
+              <span className="shape-tag border border-black/10 px-3 py-1 text-xs uppercase tracking-[0.2em] text-zinc-500">
                 {item.type}
               </span>
             </div>

@@ -51,7 +51,7 @@ export default async function NewsDetailPage({params}: NewsPageProps) {
         </div>
 
         {post.mainImage ? (
-          <div className="relative mt-10 aspect-[16/9] overflow-hidden rounded-3xl">
+          <div className="shape-panel relative mt-10 aspect-[16/9] overflow-hidden">
             <Image
               src={urlFor(post.mainImage).width(1600).height(900).url()}
               alt={post.title}

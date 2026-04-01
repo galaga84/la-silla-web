@@ -40,6 +40,40 @@ body {
     font-family: var(--font-display);
   }
 
+  .font-display {
+    font-family: var(--font-display);
+  }
+
+  .card-title {
+    @apply font-semibold tracking-tight;
+    font-family: var(--font-display);
+  }
+
+  .card-title-light {
+    @apply font-semibold tracking-tight text-white;
+    font-family: var(--font-display);
+  }
+
+  .shape-panel {
+    border-radius: 1.75rem 0.4rem 1.75rem 0.4rem;
+  }
+
+  .shape-frame {
+    border-radius: 1.5rem 0.35rem 1.5rem 0.35rem;
+  }
+
+  .shape-media {
+    border-radius: 1.25rem 0.3rem 1.25rem 0.3rem;
+  }
+
+  .shape-button {
+    border-radius: 9999px 0.75rem 9999px 0.75rem;
+  }
+
+  .shape-tag {
+    border-radius: 9999px 0.5rem 9999px 0.5rem;
+  }
+
   .body-lg {
     @apply text-base leading-7 text-zinc-600 sm:text-lg;
   }
@@ -49,16 +83,16 @@ body {
   }
 
   .card-dark {
-    @apply rounded-2xl border border-black/10 bg-zinc-50 p-6;
+    @apply shape-frame border border-black/10 bg-zinc-50 p-6;
   }
 
  .button-secondary {
-  @apply inline-flex items-center justify-center rounded-full p-[2px] text-sm font-medium transition hover:scale-[1.01];
+  @apply shape-button inline-flex items-center justify-center p-[2px] text-sm font-medium transition hover:scale-[1.01];
   background: var(--brand-gradient);
 }
 
 .button-secondary > span {
-  @apply inline-flex w-full items-center justify-center rounded-full bg-white px-6 py-3 text-center text-black;
+  @apply shape-button inline-flex w-full items-center justify-center bg-white px-6 py-3 text-center text-black;
 }
 
   .player-volume-slider {

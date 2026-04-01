@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import {usePathname} from "next/navigation";
 import Link from "next/link";
 import { type ReactNode, useState } from "react";
 
@@ -23,6 +24,15 @@ const navItems: NavItem[] = [
 
 export function SiteHeader() {
   const [isOpen, setIsOpen] = useState(false);
+  const pathname = usePathname();
+
+  function isActive(href: string) {
+    if (href === "/") {
+      return pathname === "/";
+    }
+
+    return pathname === href || pathname.startsWith(`${href}/`);
+  }
 
   return (
     <header className="sticky top-0 z-50 border-b border-black/10 bg-white/80 backdrop-blur">
@@ -48,10 +58,18 @@ export function SiteHeader() {
             <Link
               key={item.href}
               href={item.href}
-              className="flex items-center gap-2 text-sm text-zinc-600 transition hover:text-[#E8452C]"
+              className={`relative flex items-center gap-2 rounded-full px-1 py-2 text-sm transition-all duration-300 ${
+                isActive(item.href) ? "text-black" : "text-zinc-600 hover:text-[#E8452C]"
+              }`}
             >
               {item.icon ?? null}
               <span>{item.label}</span>
+              <span
+                className={`absolute inset-x-1 -bottom-[1px] h-[2px] origin-center rounded-full bg-[#E8452C] transition-all duration-300 ${
+                  isActive(item.href) ? "scale-x-100 opacity-100" : "scale-x-0 opacity-0"
+                }`}
+                aria-hidden="true"
+              />
             </Link>
           ))}
         </nav>
@@ -112,10 +130,20 @@ export function SiteHeader() {
                 key={item.href}
                 href={item.href}
                 onClick={() => setIsOpen(false)}
-                className="flex items-center gap-3 border-b border-black/5 py-4 text-base text-zinc-700 transition hover:text-[#E8452C]"
+                className={`flex items-center gap-3 border-b border-black/5 py-4 text-base transition ${
+                  isActive(item.href)
+                    ? "text-black"
+                    : "text-zinc-700 hover:text-[#E8452C]"
+                }`}
               >
                 {item.icon ?? null}
                 <span>{item.label}</span>
+                {isActive(item.href) ? (
+                  <span
+                    className="ml-auto h-2.5 w-2.5 rounded-full bg-[#E8452C] shadow-[0_0_0_4px_rgba(232,69,44,0.12)]"
+                    aria-hidden="true"
+                  />
+                ) : null}
               </Link>
             ))}
           </nav>

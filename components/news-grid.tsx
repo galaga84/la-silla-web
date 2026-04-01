@@ -49,7 +49,7 @@ export async function NewsGrid({currentPage, pageSize}: NewsGridProps) {
         {posts.map((post) => (
           <article
             key={post._id}
-            className="overflow-hidden rounded-lg shadow-sm transition hover:shadow-lg"
+            className="shape-frame overflow-hidden shadow-sm transition hover:shadow-lg"
           >
             <div className="relative h-56 w-full bg-zinc-100">
               {post.mainImage ? (
@@ -69,7 +69,7 @@ export async function NewsGrid({currentPage, pageSize}: NewsGridProps) {
               </time>
 
               <Link href={`/noticias/${post.slug}`}>
-                <h3 className="mt-3 text-lg text-gray-900 transition hover:text-[#E8452C] sm:text-xl">
+                <h3 className="card-title mt-3 text-lg text-gray-900 transition hover:text-[#E8452C] sm:text-xl">
                   {post.title}
                 </h3>
               </Link>

@@ -52,7 +52,7 @@ export async function ShowsList({currentPage, pageSize}: ShowsListProps) {
           </div>
         </div>
 
-        <div className="mt-8 divide-y divide-black/10 overflow-hidden rounded-3xl border border-black/10 bg-zinc-50">
+        <div className="shape-panel mt-8 divide-y divide-black/10 overflow-hidden border border-black/10 bg-zinc-50">
           {data.upcoming.map((show) => (
             <article
               key={show._id}
@@ -63,7 +63,7 @@ export async function ShowsList({currentPage, pageSize}: ShowsListProps) {
               </div>
 
               <div>
-                <h3 className="text-xl font-semibold tracking-tight">{show.artist || show.title}</h3>
+                <h3 className="card-title text-xl">{show.artist || show.title}</h3>
                 <p className="mt-1 text-sm text-zinc-600">
                   {[show.city, show.venue].filter(Boolean).join(" - ")}
                 </p>
@@ -101,7 +101,7 @@ export async function ShowsList({currentPage, pageSize}: ShowsListProps) {
               <p className="text-xs uppercase tracking-[0.2em] text-zinc-500">
                 {formatDate(show.date)}
               </p>
-              <h3 className="mt-3 text-xl font-semibold tracking-tight">{show.artist || show.title}</h3>
+              <h3 className="card-title mt-3 text-xl">{show.artist || show.title}</h3>
               <p className="body-md mt-3">
                 {[show.city, show.venue].filter(Boolean).join(" - ")}
               </p>

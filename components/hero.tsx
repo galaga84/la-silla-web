@@ -31,7 +31,7 @@ export function Hero() {
   return (
     <section className="bg-white px-6 py-10 md:py-12">
       <div className="mx-auto max-w-7xl">
-        <div className="relative h-[70vh] min-h-[420px] overflow-hidden rounded-2xl">
+        <div className="shape-frame relative h-[70vh] min-h-[420px] overflow-hidden">
           {slides.map((slide, index) => (
             <div
               key={slide.image}

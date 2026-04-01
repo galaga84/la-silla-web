@@ -71,7 +71,7 @@ export default async function ArtistDetailPage({params}: ArtistPageProps) {
   return (
     <main className="container-site section-space">
       <div className="grid gap-10 lg:grid-cols-[420px_1fr]">
-        <div className="relative aspect-[4/5] overflow-hidden rounded-3xl border border-white/10 bg-zinc-900">
+        <div className="shape-panel relative aspect-[4/5] overflow-hidden border border-white/10 bg-zinc-900">
           {artist.image ? (
             <Image
               src={urlFor(artist.image).width(1200).height(1500).url()}

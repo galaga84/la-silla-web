@@ -31,8 +31,8 @@ export async function RecentReleases() {
   const featuredReleases = releases.slice(0, 3);
 
   return (
-    <section className="border-t border-black/10 bg-white">
-      <div className="container-site section-space">
+    <section className="bg-white">
+      <div className="container-site border-t border-black/10 section-space">
         <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
           <div>
             <p className="eyebrow">Lanzamientos</p>
@@ -51,9 +51,9 @@ export async function RecentReleases() {
             <Link
               key={release._id}
               href={`/lanzamientos/${release.slug}`}
-              className="group mx-auto block w-full max-w-md overflow-hidden rounded-[1.75rem] border border-black/8 bg-white shadow-[0_12px_34px_rgba(17,17,17,0.06)] transition hover:-translate-y-0.5 hover:shadow-[0_18px_48px_rgba(17,17,17,0.1)] md:max-w-none"
+              className="group shape-panel mx-auto block w-full max-w-md overflow-hidden border border-black/8 bg-white shadow-[0_12px_34px_rgba(17,17,17,0.06)] md:max-w-none"
             >
-              <div className="relative h-56 w-full bg-zinc-100">
+              <div className="relative mb-4 h-56 w-full overflow-hidden bg-zinc-100">
                 {release.cover ? (
                   <Image
                     alt={release.title}
@@ -73,7 +73,7 @@ export async function RecentReleases() {
                   <span>{release.year}</span>
                 </div>
 
-                <h3 className="mt-3 text-lg text-gray-900 transition group-hover:text-[#E8452C] sm:text-xl">
+                <h3 className="card-title mt-3 text-lg text-gray-900 transition group-hover:text-[#E8452C] sm:text-xl">
                   {release.title}
                 </h3>
 

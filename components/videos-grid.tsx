@@ -40,7 +40,7 @@ export async function VideosGrid({currentPage, pageSize}: VideosGridProps) {
         {videos.map((video) => (
           <article
             key={video._id}
-            className="group overflow-hidden rounded-3xl border border-black/10 bg-zinc-50 transition hover:border-black/20 hover:bg-zinc-100/80"
+            className="group shape-panel overflow-hidden border border-black/10 bg-zinc-50 transition hover:border-black/20 hover:bg-zinc-100/80"
           >
             <div className="relative aspect-video bg-zinc-900">
               {video.thumbnail ? (
@@ -65,7 +65,7 @@ export async function VideosGrid({currentPage, pageSize}: VideosGridProps) {
                 <span>{video.year}</span>
               </div>
 
-              <h2 className="mt-4 text-2xl font-semibold tracking-tight text-black">
+              <h2 className="card-title mt-4 text-2xl text-black">
                 {video.artist ? `${video.artist} - ${video.title}` : video.title}
               </h2>
 
