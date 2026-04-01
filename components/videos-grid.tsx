@@ -25,6 +25,35 @@ type VideosGridProps = {
   pageSize: number;
 };
 
+function getYouTubeEmbedUrl(videoUrl: string) {
+  try {
+    const url = new URL(videoUrl);
+    const hostname = url.hostname.replace(/^www\./, "");
+
+    if (hostname === "youtube.com" || hostname === "m.youtube.com") {
+      const videoId = url.searchParams.get("v");
+      return videoId ? `https://www.youtube.com/embed/${videoId}` : null;
+    }
+
+    if (hostname === "youtu.be") {
+      const videoId = url.pathname.split("/").filter(Boolean)[0];
+      return videoId ? `https://www.youtube.com/embed/${videoId}` : null;
+    }
+
+    if (hostname === "youtube-nocookie.com") {
+      const parts = url.pathname.split("/").filter(Boolean);
+      const videoId = parts[1];
+      return parts[0] === "embed" && videoId
+        ? `https://www.youtube.com/embed/${videoId}`
+        : null;
+    }
+  } catch {
+    return null;
+  }
+
+  return null;
+}
+
 export async function VideosGrid({currentPage, pageSize}: VideosGridProps) {
   const start = (currentPage - 1) * pageSize;
   const end = start + pageSize;
@@ -37,48 +66,54 @@ export async function VideosGrid({currentPage, pageSize}: VideosGridProps) {
   return (
     <section className="mt-12">
       <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-        {videos.map((video) => (
-          <article
-            key={video._id}
-            className="group shape-panel overflow-hidden border border-black/10 bg-zinc-50 transition hover:border-black/20 hover:bg-zinc-100/80"
-          >
-            <div className="relative aspect-video bg-zinc-900">
-              {video.thumbnail ? (
-                <Image
-                  src={urlFor(video.thumbnail).width(1280).height(720).url()}
-                  alt={video.title}
-                  fill
-                  className="object-cover opacity-70"
-                />
-              ) : null}
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="flex h-16 w-16 items-center justify-center rounded-full border border-black/10 bg-white/80 text-black">
-                  ?
+        {videos.map((video) => {
+          const embedUrl = getYouTubeEmbedUrl(video.videoUrl);
+
+          return (
+            <article
+              key={video._id}
+              className="shape-panel overflow-hidden border border-black/8 bg-white shadow-[0_12px_34px_rgba(17,17,17,0.06)]"
+            >
+              <div className="relative aspect-video bg-zinc-900">
+                {embedUrl ? (
+                  <iframe
+                    src={embedUrl}
+                    title={video.artist ? `${video.artist} - ${video.title}` : video.title}
+                    className="h-full w-full"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    referrerPolicy="strict-origin-when-cross-origin"
+                    allowFullScreen
+                  />
+                ) : video.thumbnail ? (
+                  <Image
+                    src={urlFor(video.thumbnail).width(1280).height(720).url()}
+                    alt={video.title}
+                    fill
+                    className="object-cover opacity-70"
+                  />
+                ) : (
+                  <div className="h-full w-full bg-zinc-200" />
+                )}
+              </div>
+
+              <div className="bg-white p-4 sm:p-6">
+                <div className="flex flex-wrap items-center gap-2 text-xs uppercase tracking-[0.18em] text-gray-500">
+                  <span>{video.type}</span>
+                  {video.type && video.year ? <span>-</span> : null}
+                  <span>{video.year}</span>
                 </div>
+
+                <h2 className="card-title mt-3 text-lg text-gray-900 sm:text-xl">
+                  {video.artist ? `${video.artist} - ${video.title}` : video.title}
+                </h2>
+
+                {video.description ? (
+                  <p className="mt-3 text-sm leading-6 text-gray-500">{video.description}</p>
+                ) : null}
               </div>
-            </div>
-
-            <div className="p-6">
-              <div className="flex flex-wrap items-center gap-2 text-xs uppercase tracking-[0.2em] text-zinc-500">
-                <span>{video.type}</span>
-                {video.type && video.year ? <span>-</span> : null}
-                <span>{video.year}</span>
-              </div>
-
-              <h2 className="card-title mt-4 text-2xl text-black">
-                {video.artist ? `${video.artist} - ${video.title}` : video.title}
-              </h2>
-
-              {video.description ? <p className="body-md mt-4">{video.description}</p> : null}
-
-              <div className="mt-6">
-                <a href={video.videoUrl} target="_blank" rel="noreferrer" className="button-secondary">
-                  <span>Ver video</span>
-                </a>
-              </div>
-            </div>
-          </article>
-        ))}
+            </article>
+          );
+        })}
       </div>
 
       <PaginationNav
