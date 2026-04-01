@@ -66,7 +66,7 @@ export function CtaBanner() {
       <div className="container-site border-t border-black/10 py-20">
         <div className="grid gap-10 lg:grid-cols-[minmax(0,1.1fr)_minmax(320px,0.9fr)] lg:items-center">
           <div>
-            <p className="eyebrow">Suscribete</p>
+            <p className="eyebrow">Suscríbete</p>
             <h2 className="mt-4 max-w-3xl text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl">
               Enterate de nuestras noticias, lanzamientos y movimiento editorial.
             </h2>
