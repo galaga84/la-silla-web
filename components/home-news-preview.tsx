@@ -47,8 +47,9 @@ export async function HomeNewsPreview() {
 
         <div className="mt-12 grid gap-6 lg:grid-cols-3">
           {posts.map((post) => (
-            <article
+            <Link
               key={post._id}
+              href={`/noticias/${post.slug}`}
               className="group shape-panel overflow-hidden border border-black/8 bg-white shadow-[0_12px_34px_rgba(17,17,17,0.06)]"
             >
               <div className="relative mb-4 h-56 w-full overflow-hidden bg-zinc-100">
@@ -68,11 +69,9 @@ export async function HomeNewsPreview() {
                   {post.category ? `  -  ${post.category}` : ""}
                 </time>
 
-                <Link href={`/noticias/${post.slug}`}>
-                  <h3 className="card-title mt-3 text-lg text-gray-900 transition group-hover:text-[#E8452C] sm:text-xl">
-                    {post.title}
-                  </h3>
-                </Link>
+                <h3 className="card-title mt-3 text-lg text-gray-900 transition group-hover:text-[#E8452C] sm:text-xl">
+                  {post.title}
+                </h3>
 
                 {post.excerpt ? (
                   <p className="mt-2 text-sm leading-6 text-gray-500">
@@ -80,7 +79,7 @@ export async function HomeNewsPreview() {
                   </p>
                 ) : null}
               </div>
-            </article>
+            </Link>
           ))}
         </div>
       </div>
