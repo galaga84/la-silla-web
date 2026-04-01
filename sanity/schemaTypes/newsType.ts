@@ -12,6 +12,16 @@ export const newsType = defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
+      name: "externalUrl",
+      title: "Link externo",
+      type: "url",
+      description: "Usalo para notas de prensa publicadas en otros medios.",
+      validation: (Rule) =>
+        Rule.uri({
+          scheme: ["http", "https"],
+        }),
+    }),
+    defineField({
       name: "slug",
       title: "Slug",
       type: "slug",
@@ -19,7 +29,15 @@ export const newsType = defineType({
         source: "title",
         maxLength: 96,
       },
-      validation: (Rule) => Rule.required(),
+      validation: (Rule) =>
+        Rule.custom((value, context) => {
+          const hasExternalUrl = Boolean((context.document as {externalUrl?: string} | undefined)?.externalUrl);
+          if (hasExternalUrl || value?.current) {
+            return true;
+          }
+
+          return "El slug es obligatorio si la nota no tiene un link externo.";
+        }),
     }),
     defineField({
       name: "category",
@@ -50,6 +68,15 @@ export const newsType = defineType({
       title: "Contenido",
       type: "array",
       of: [{type: "block"}],
+      validation: (Rule) =>
+        Rule.custom((value, context) => {
+          const hasExternalUrl = Boolean((context.document as {externalUrl?: string} | undefined)?.externalUrl);
+          if (hasExternalUrl || (value && value.length > 0)) {
+            return true;
+          }
+
+          return "Agrega contenido o usa un link externo para notas de prensa.";
+        }),
     }),
   ],
   preview: {

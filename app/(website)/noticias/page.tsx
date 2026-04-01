@@ -24,7 +24,7 @@ export default async function NoticiasPage({searchParams}: NoticiasPageProps) {
         <h1 className="heading-lg mt-4">Novedades del sello y del catálogo</h1>
         <p className="body-lg mt-5">
           Un espacio para anuncios, lanzamientos, incorporaciones, cobertura,
-          agenda y contenidos editoriales vinculados al sello.
+          prensa, agenda y contenidos editoriales vinculados al sello.
         </p>
       </header>
 

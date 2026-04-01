@@ -1,11 +1,12 @@
 import {defineQuery} from "next-sanity";
 
 export const homeNewsQuery = defineQuery(`
-  *[_type == "news" && defined(slug.current)]
+  *[_type == "news" && (defined(slug.current) || defined(externalUrl))]
   | order(coalesce(publishedAt, _createdAt) desc)[0...3]{
     _id,
     title,
     "slug": slug.current,
+    externalUrl,
     category,
     publishedAt,
     excerpt,
@@ -14,11 +15,12 @@ export const homeNewsQuery = defineQuery(`
 `);
 
 export const allNewsQuery = defineQuery(`
-  *[_type == "news" && defined(slug.current)]
+  *[_type == "news" && (defined(slug.current) || defined(externalUrl))]
   | order(coalesce(publishedAt, _createdAt) desc){
     _id,
     title,
     "slug": slug.current,
+    externalUrl,
     category,
     publishedAt,
     excerpt,
@@ -28,17 +30,18 @@ export const allNewsQuery = defineQuery(`
 
 export const paginatedNewsQuery = defineQuery(`
   {
-    "items": *[_type == "news" && defined(slug.current)]
+    "items": *[_type == "news" && (defined(slug.current) || defined(externalUrl))]
       | order(coalesce(publishedAt, _createdAt) desc)[$start...$end]{
         _id,
         title,
         "slug": slug.current,
+        externalUrl,
         category,
         publishedAt,
         excerpt,
         mainImage
       },
-    "total": count(*[_type == "news" && defined(slug.current)])
+    "total": count(*[_type == "news" && (defined(slug.current) || defined(externalUrl))])
   }
 `);
 
@@ -47,6 +50,7 @@ export const newsBySlugQuery = defineQuery(`
     _id,
     title,
     "slug": slug.current,
+    externalUrl,
     category,
     publishedAt,
     excerpt,

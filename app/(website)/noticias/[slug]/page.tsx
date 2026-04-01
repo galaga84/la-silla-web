@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import {PortableText} from "@portabletext/react";
 import type {PortableTextBlock} from "@portabletext/types";
-import {notFound} from "next/navigation";
+import {notFound, redirect} from "next/navigation";
 import {client} from "@/sanity/lib/client";
 import {urlFor} from "@/sanity/lib/image";
 import {newsBySlugQuery} from "@/sanity/lib/queries";
@@ -15,6 +15,7 @@ type NewsPageProps = {
 
 type NewsPost = {
   title: string;
+  externalUrl?: string;
   category?: string;
   publishedAt?: string;
   mainImage?: unknown;
@@ -36,6 +37,10 @@ export default async function NewsDetailPage({params}: NewsPageProps) {
 
   if (!post) {
     notFound();
+  }
+
+  if (post.externalUrl) {
+    redirect(post.externalUrl);
   }
 
   return (

@@ -7,7 +7,8 @@ import {homeNewsQuery} from "@/sanity/lib/queries";
 type HomeNewsItem = {
   _id: string;
   title: string;
-  slug: string;
+  slug?: string;
+  externalUrl?: string;
   category?: string;
   publishedAt?: string;
   excerpt?: string;
@@ -46,41 +47,53 @@ export async function HomeNewsPreview() {
         </div>
 
         <div className="mt-12 grid gap-6 lg:grid-cols-3">
-          {posts.map((post) => (
-            <Link
-              key={post._id}
-              href={`/noticias/${post.slug}`}
-              className="group shape-panel overflow-hidden border border-black/8 bg-white shadow-[0_12px_34px_rgba(17,17,17,0.06)]"
-            >
-              <div className="relative mb-4 h-56 w-full overflow-hidden bg-zinc-100">
-                {post.mainImage ? (
-                  <Image
-                    src={urlFor(post.mainImage).width(1200).height(700).url()}
-                    alt={post.title}
-                    fill
-                    className="object-cover transition duration-500 ease-out group-hover:scale-[1.04]"
-                  />
-                ) : null}
-              </div>
+          {posts.map((post) => {
+            const href = post.externalUrl ?? `/noticias/${post.slug}`;
+            const isExternal = Boolean(post.externalUrl);
 
-              <div className="bg-white p-4 sm:p-6">
-                <time className="block text-xs uppercase tracking-[0.18em] text-gray-500">
-                  {formatDate(post.publishedAt)}
-                  {post.category ? `  -  ${post.category}` : ""}
-                </time>
+            return (
+              <Link
+                key={post._id}
+                href={href}
+                className="group shape-panel overflow-hidden border border-black/8 bg-white shadow-[0_12px_34px_rgba(17,17,17,0.06)]"
+                target={isExternal ? "_blank" : undefined}
+                rel={isExternal ? "noreferrer" : undefined}
+              >
+                <div className="relative mb-4 h-56 w-full overflow-hidden bg-zinc-100">
+                  {post.mainImage ? (
+                    <Image
+                      src={urlFor(post.mainImage).width(1200).height(700).url()}
+                      alt={post.title}
+                      fill
+                      className="object-cover transition duration-500 ease-out group-hover:scale-[1.04]"
+                    />
+                  ) : null}
+                </div>
 
-                <h3 className="card-title mt-3 text-lg text-gray-900 transition group-hover:text-[#E8452C] sm:text-xl">
-                  {post.title}
-                </h3>
+                <div className="bg-white p-4 sm:p-6">
+                  <time className="block text-xs uppercase tracking-[0.18em] text-gray-500">
+                    {formatDate(post.publishedAt)}
+                    {post.category ? `  -  ${post.category}` : ""}
+                    {isExternal ? "  -  Prensa" : ""}
+                  </time>
 
-                {post.excerpt ? (
-                  <p className="mt-2 text-sm leading-6 text-gray-500">
-                    {post.excerpt}
+                  <h3 className="card-title mt-3 text-lg text-gray-900 transition group-hover:text-[#E8452C] sm:text-xl">
+                    {post.title}
+                  </h3>
+
+                  {post.excerpt ? (
+                    <p className="mt-2 text-sm leading-6 text-gray-500">
+                      {post.excerpt}
+                    </p>
+                  ) : null}
+
+                  <p className="mt-4 text-xs font-medium uppercase tracking-[0.18em] text-[#E8452C]">
+                    {isExternal ? "Abrir nota de prensa" : "Leer noticia"}
                   </p>
-                ) : null}
-              </div>
-            </Link>
-          ))}
+                </div>
+              </Link>
+            );
+          })}
         </div>
       </div>
     </section>
