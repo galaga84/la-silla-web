@@ -24,7 +24,7 @@ function getDescriptionPreview(blocks?: PortableTextBlock[]) {
     .join(" ")
     .trim();
 
-  return text ? text.slice(0, 160) + (text.length > 160 ? "..." : "") : "";
+  return text ? text.slice(0, 140) + (text.length > 140 ? "..." : "") : "";
 }
 
 type PaginatedReleasesResult = {
@@ -56,37 +56,40 @@ export async function ReleasesGrid({
           <Link
             key={release._id}
             href={`/lanzamientos/${release.slug}`}
-            className="block"
+            className="group shape-panel mx-auto block w-full max-w-md overflow-hidden border border-black/8 bg-white shadow-[0_12px_34px_rgba(17,17,17,0.06)] md:max-w-none"
           >
-            {release.cover ? (
-              <Image
-                alt={release.title}
-                src={urlFor(release.cover).width(1200).height(1200).url()}
-                width={1200}
-                height={1200}
-                className="shape-media h-64 w-full object-cover sm:h-80 lg:h-96"
-              />
-            ) : (
-              <div className="shape-media h-64 w-full bg-zinc-200 sm:h-80 lg:h-96" />
-            )}
-
-            <div className="mt-4 flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-zinc-500">
-              <span>{release.format}</span>
-              {release.format && release.year ? <span>-</span> : null}
-              <span>{release.year}</span>
+            <div className="relative mb-4 h-56 w-full overflow-hidden bg-zinc-100">
+              {release.cover ? (
+                <Image
+                  alt={release.title}
+                  src={urlFor(release.cover).width(1200).height(1200).url()}
+                  fill
+                  className="object-cover transition duration-500 ease-out group-hover:scale-[1.04]"
+                />
+              ) : (
+                <div className="h-full w-full bg-zinc-200" />
+              )}
             </div>
 
-            <h3 className="card-title mt-3 text-lg text-gray-900 sm:text-xl">
-              {release.title}
-            </h3>
+            <div className="bg-white p-4 sm:p-6">
+              <div className="text-xs uppercase tracking-[0.18em] text-gray-500">
+                <span>{release.format}</span>
+                {release.format && release.year ? <span>{`  -  `}</span> : null}
+                <span>{release.year}</span>
+              </div>
 
-            {release.artist ? (
-              <p className="mt-1 text-sm text-zinc-500">{release.artist}</p>
-            ) : null}
+              <h3 className="card-title mt-3 text-lg text-gray-900 transition group-hover:text-[#E8452C] sm:text-xl">
+                {release.title}
+              </h3>
 
-            <p className="mt-3 max-w-sm text-gray-700">
-              {getDescriptionPreview(release.description)}
-            </p>
+              {release.artist ? (
+                <p className="mt-2 text-sm text-gray-500">{release.artist}</p>
+              ) : null}
+
+              <p className="mt-3 text-sm leading-6 text-gray-500">
+                {getDescriptionPreview(release.description)}
+              </p>
+            </div>
           </Link>
         ))}
       </div>

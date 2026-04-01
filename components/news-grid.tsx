@@ -49,15 +49,15 @@ export async function NewsGrid({currentPage, pageSize}: NewsGridProps) {
         {posts.map((post) => (
           <article
             key={post._id}
-            className="shape-frame overflow-hidden shadow-sm transition hover:shadow-lg"
+            className="group shape-panel overflow-hidden border border-black/8 bg-white shadow-[0_12px_34px_rgba(17,17,17,0.06)]"
           >
-            <div className="relative h-56 w-full bg-zinc-100">
+            <div className="relative mb-4 h-56 w-full overflow-hidden bg-zinc-100">
               {post.mainImage ? (
                 <Image
                   src={urlFor(post.mainImage).width(1200).height(700).url()}
                   alt={post.title}
                   fill
-                  className="object-cover"
+                  className="object-cover transition duration-500 ease-out group-hover:scale-[1.04]"
                 />
               ) : null}
             </div>
@@ -65,11 +65,11 @@ export async function NewsGrid({currentPage, pageSize}: NewsGridProps) {
             <div className="bg-white p-4 sm:p-6">
               <time className="block text-xs uppercase tracking-[0.18em] text-gray-500">
                 {formatDate(post.publishedAt)}
-                {post.category ? ` - ${post.category}` : ""}
+                {post.category ? `  -  ${post.category}` : ""}
               </time>
 
               <Link href={`/noticias/${post.slug}`}>
-                <h3 className="card-title mt-3 text-lg text-gray-900 transition hover:text-[#E8452C] sm:text-xl">
+                <h3 className="card-title mt-3 text-lg text-gray-900 transition group-hover:text-[#E8452C] sm:text-xl">
                   {post.title}
                 </h3>
               </Link>
