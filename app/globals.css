@@ -55,23 +55,23 @@ body {
   }
 
   .shape-panel {
-    border-radius: 1.75rem 0.4rem 1.75rem 0.4rem;
+    border-radius: 0;
   }
 
   .shape-frame {
-    border-radius: 1.5rem 0.35rem 1.5rem 0.35rem;
+    border-radius: 0;
   }
 
   .shape-media {
-    border-radius: 1.25rem 0.3rem 1.25rem 0.3rem;
+    border-radius: 0;
   }
 
   .shape-button {
-    border-radius: 9999px 0.75rem 9999px 0.75rem;
+    border-radius: 9999px;
   }
 
   .shape-tag {
-    border-radius: 9999px 0.5rem 9999px 0.5rem;
+    border-radius: 9999px;
   }
 
   .body-lg {
@@ -84,18 +84,18 @@ body {
 
   .card-dark {
     @apply border border-black/10 bg-zinc-50 p-6;
-    border-radius: 1.5rem 0.35rem 1.5rem 0.35rem;
+    border-radius: 0;
   }
 
  .button-secondary {
   @apply inline-flex items-center justify-center p-[2px] text-sm font-medium transition hover:scale-[1.01];
-  border-radius: 9999px 0.75rem 9999px 0.75rem;
+  border-radius: 9999px;
   background: var(--brand-gradient);
 }
 
 .button-secondary > span {
   @apply inline-flex w-full items-center justify-center bg-white px-6 py-3 text-center text-black;
-  border-radius: 9999px 0.75rem 9999px 0.75rem;
+  border-radius: 9999px;
 }
 
   .player-volume-slider {
