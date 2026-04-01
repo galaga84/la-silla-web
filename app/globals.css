@@ -83,16 +83,19 @@ body {
   }
 
   .card-dark {
-    @apply shape-frame border border-black/10 bg-zinc-50 p-6;
+    @apply border border-black/10 bg-zinc-50 p-6;
+    border-radius: 1.5rem 0.35rem 1.5rem 0.35rem;
   }
 
  .button-secondary {
-  @apply shape-button inline-flex items-center justify-center p-[2px] text-sm font-medium transition hover:scale-[1.01];
+  @apply inline-flex items-center justify-center p-[2px] text-sm font-medium transition hover:scale-[1.01];
+  border-radius: 9999px 0.75rem 9999px 0.75rem;
   background: var(--brand-gradient);
 }
 
 .button-secondary > span {
-  @apply shape-button inline-flex w-full items-center justify-center bg-white px-6 py-3 text-center text-black;
+  @apply inline-flex w-full items-center justify-center bg-white px-6 py-3 text-center text-black;
+  border-radius: 9999px 0.75rem 9999px 0.75rem;
 }
 
   .player-volume-slider {
