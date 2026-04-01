@@ -32,7 +32,7 @@ export async function UpcomingShows() {
         <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
           <div>
             <p className="eyebrow">Fechas</p>
-            <h2 className="heading-lg mt-3">Proximas presentaciones</h2>
+            <h2 className="heading-lg mt-3">Próximas presentaciones</h2>
           </div>
 
           <div>
@@ -64,7 +64,7 @@ export async function UpcomingShows() {
                   rel="noreferrer"
                   className="button-secondary w-full sm:w-auto md:justify-self-end"
                 >
-                  <span>{show.status || "Mas info"}</span>
+                  <span>{show.status || "Más info"}</span>
                 </a>
               ) : show.status ? (
                 <span className="text-sm text-zinc-500">{show.status}</span>

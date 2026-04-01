@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import {FormEvent, useState} from "react";
 
@@ -23,7 +23,7 @@ export function CtaBanner() {
     if (!normalizedEmail) {
       setState({
         status: "error",
-        message: "Ingresa un correo valido para suscribirte.",
+        message: "Ingresa un correo válido para suscribirte.",
       });
       return;
     }
@@ -56,7 +56,7 @@ export function CtaBanner() {
         message:
           error instanceof Error
             ? error.message
-            : "Ocurrio un problema al enviar el formulario.",
+            : "Ocurrió un problema al enviar el formulario.",
       });
     }
   }
@@ -68,18 +68,18 @@ export function CtaBanner() {
           <div>
             <p className="eyebrow">Suscríbete</p>
             <h2 className="mt-4 max-w-3xl text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl">
-              Enterate de nuestras noticias, lanzamientos y movimiento editorial.
+              Entérate de nuestras noticias, lanzamientos y movimiento editorial.
             </h2>
             <p className="body-lg mt-5 max-w-2xl text-gray-600">
               Recibe novedades del sello directo en tu correo. Sin ruido, solo anuncios,
-              agenda, catalogo y contenido relevante.
+              agenda, catálogo y contenido relevante.
             </p>
           </div>
 
           <div className="flex h-full flex-col justify-center">
             <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
               <label htmlFor="newsletter-email" className="text-sm font-medium text-gray-900">
-                Correo electronico
+                Correo electrónico
               </label>
 
               <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
@@ -108,7 +108,7 @@ export function CtaBanner() {
 
             <p className="mt-4 text-sm leading-6 text-gray-500">
               Al suscribirte aceptas recibir novedades de La Silla. Puedes darte de baja
-              mas adelante si lo necesitas.
+              más adelante si lo necesitas.
             </p>
 
             {state.message ? (

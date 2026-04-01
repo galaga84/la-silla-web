@@ -41,7 +41,7 @@ export async function POST(request: Request) {
 
     if (!email || !isValidEmail(email)) {
       return NextResponse.json(
-        {message: "Ingresa un correo valido."},
+        {message: "Ingresa un correo válido."},
         {status: 400},
       );
     }

@@ -48,7 +48,7 @@ export async function ShowsList({currentPage, pageSize}: ShowsListProps) {
         <div className="flex items-end justify-between gap-4">
           <div>
             <p className="eyebrow">Agenda</p>
-            <h2 className="heading-lg mt-3">Proximas presentaciones</h2>
+            <h2 className="heading-lg mt-3">Próximas presentaciones</h2>
           </div>
         </div>
 
@@ -80,7 +80,7 @@ export async function ShowsList({currentPage, pageSize}: ShowsListProps) {
                     rel="noreferrer"
                     className="button-secondary w-full sm:w-auto"
                   >
-                    <span>Mas info</span>
+                    <span>Más info</span>
                   </a>
                 ) : null}
               </div>
@@ -92,7 +92,7 @@ export async function ShowsList({currentPage, pageSize}: ShowsListProps) {
       <div>
         <div>
           <p className="eyebrow">Archivo</p>
-          <h2 className="heading-lg mt-3">Fechas recientes</h2>
+          <h2 className="heading-lg mt-3">Fechas anteriores</h2>
         </div>
 
         <div className="mt-8 grid gap-4 md:grid-cols-3">

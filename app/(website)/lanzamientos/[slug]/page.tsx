@@ -70,7 +70,7 @@ export default async function ReleaseDetailPage({params}: ReleasePageProps) {
             <div className="card-dark">
               <h2 className="text-lg font-semibold">Ficha</h2>
               <p className="body-md mt-3">
-                {[release.format, release.year].filter(Boolean).join(" - ") || "Sin ficha complementaria todavia."}
+                {[release.format, release.year].filter(Boolean).join(" - ") || "Sin ficha complementaria todavía."}
               </p>
             </div>
 

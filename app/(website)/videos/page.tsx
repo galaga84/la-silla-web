@@ -1,4 +1,4 @@
-import { VideosGrid } from "@/components/videos-grid";
+﻿import { VideosGrid } from "@/components/videos-grid";
 
 const PAGE_SIZE = 6;
 

@@ -1,4 +1,4 @@
-import { PressResources } from "@/components/press-resources";
+﻿import { PressResources } from "@/components/press-resources";
 
 export default function PrensaPage() {
   return (

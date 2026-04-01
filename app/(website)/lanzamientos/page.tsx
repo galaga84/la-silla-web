@@ -1,4 +1,4 @@
-import { ReleasesGrid } from "@/components/releases-grid";
+﻿import { ReleasesGrid } from "@/components/releases-grid";
 
 const PAGE_SIZE = 6;
 

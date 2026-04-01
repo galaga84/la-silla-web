@@ -101,12 +101,12 @@ export default async function ArtistDetailPage({params}: ArtistPageProps) {
                   <Link key={release._id} href={`/lanzamientos/${release.slug}`} className="block text-sm text-zinc-700 transition hover:text-[#E8452C]">
                     {release.title}{release.format || release.year ? ` - ${[release.format, release.year].filter(Boolean).join(" - ")}` : ""}
                   </Link>
-                )) : <p className="body-md">Sin lanzamientos asociados todavia.</p>}
+                )) : <p className="body-md">Sin lanzamientos asociados todavía.</p>}
               </div>
             </div>
 
             <div className="card-dark">
-              <h2 className="text-lg font-semibold">Proximas fechas</h2>
+              <h2 className="text-lg font-semibold">Próximas fechas</h2>
               <div className="mt-3 space-y-3">
                 {artist.shows?.length ? artist.shows.map((show) => (
                   <div key={show._id} className="text-sm text-zinc-700">

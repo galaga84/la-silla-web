@@ -32,13 +32,13 @@ export async function FeaturedArtists() {
       <div className="container-site border-t border-black/10 section-space">
         <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
           <div>
-            <p className="eyebrow">Catalogo</p>
+            <p className="eyebrow">Catálogo</p>
             <h2 className="heading-lg mt-3">Proyectos del sello</h2>
           </div>
 
           <div>
             <Link href="/artistas" className="button-secondary">
-              <span>Ver catalogo</span>
+              <span>Ver catálogo</span>
             </Link>
           </div>
         </div>

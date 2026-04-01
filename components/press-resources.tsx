@@ -1,4 +1,4 @@
-const pressItems = [
+﻿const pressItems = [
   {
     title: "Press kit del sello",
     description:

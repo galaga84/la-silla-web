@@ -10,7 +10,7 @@ export const subscriberType = defineType({
       title: "Correo",
       type: "string",
       validation: (Rule) =>
-        Rule.required().email().error("Ingresa un correo valido."),
+        Rule.required().email().error("Ingresa un correo válido."),
     }),
     defineField({
       name: "source",

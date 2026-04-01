@@ -1,4 +1,4 @@
-import { ShowsList } from "@/components/shows-list";
+﻿import { ShowsList } from "@/components/shows-list";
 
 const PAGE_SIZE = 6;
 

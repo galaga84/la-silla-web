@@ -10,7 +10,7 @@ export function AnnouncementBar() {
             href="/lanzamientos"
             className="underline decoration-[#1f1630] underline-offset-4 transition hover:opacity-80"
           >
-            Ver catalogo
+            Ver catálogo
           </Link>
         </p>
       </div>

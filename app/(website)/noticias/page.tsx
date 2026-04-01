@@ -1,4 +1,4 @@
-import { NewsGrid } from "@/components/news-grid";
+﻿import { NewsGrid } from "@/components/news-grid";
 
 const PAGE_SIZE = 6;
 
