@@ -1,4 +1,5 @@
-﻿import {defineField, defineType} from "sanity";
+import {defineField, defineType} from "sanity";
+import {DEFAULT_SLUG_MAX_LENGTH, slugifyValue, validateSlug} from "./slug";
 
 export const releaseType = defineType({
   name: "release",
@@ -17,9 +18,10 @@ export const releaseType = defineType({
       type: "slug",
       options: {
         source: "title",
-        maxLength: 96,
+        maxLength: DEFAULT_SLUG_MAX_LENGTH,
+        slugify: (input) => slugifyValue(input, DEFAULT_SLUG_MAX_LENGTH),
       },
-      validation: (Rule) => Rule.required(),
+      validation: (Rule) => Rule.required().custom(validateSlug),
     }),
     defineField({
       name: "artist",

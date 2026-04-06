@@ -1,4 +1,5 @@
-﻿import {defineField, defineType} from "sanity";
+import {defineField, defineType} from "sanity";
+import {DEFAULT_SLUG_MAX_LENGTH, slugifyValue, validateSlug} from "./slug";
 
 export const newsType = defineType({
   name: "news",
@@ -27,16 +28,17 @@ export const newsType = defineType({
       type: "slug",
       options: {
         source: "title",
-        maxLength: 96,
+        maxLength: DEFAULT_SLUG_MAX_LENGTH,
+        slugify: (input) => slugifyValue(input, DEFAULT_SLUG_MAX_LENGTH),
       },
       validation: (Rule) =>
         Rule.custom((value, context) => {
           const hasExternalUrl = Boolean((context.document as {externalUrl?: string} | undefined)?.externalUrl);
-          if (hasExternalUrl || value?.current) {
-            return true;
+          if (!hasExternalUrl && !value?.current) {
+            return "El slug es obligatorio si la nota no tiene un link externo.";
           }
 
-          return "El slug es obligatorio si la nota no tiene un link externo.";
+          return validateSlug(value);
         }),
     }),
     defineField({
