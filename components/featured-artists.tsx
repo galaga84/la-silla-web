@@ -55,6 +55,7 @@ export async function FeaturedArtists() {
                   alt={artist.name}
                   src={urlFor(artist.image).width(1200).height(1600).url()}
                   fill
+                  sizes="(min-width: 768px) 33vw, 100vw"
                   className="absolute inset-0 h-full w-full object-cover opacity-75 transition-opacity duration-300 group-hover:opacity-50"
                 />
               ) : null}

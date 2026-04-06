@@ -65,6 +65,7 @@ export async function NewsGrid({currentPage, pageSize}: NewsGridProps) {
                     src={urlFor(post.mainImage).width(1200).height(700).url()}
                     alt={post.title}
                     fill
+                    sizes="(min-width: 1280px) 33vw, (min-width: 1024px) 50vw, 100vw"
                     className="object-cover transition duration-500 ease-out group-hover:scale-[1.04]"
                   />
                 ) : null}

@@ -209,7 +209,7 @@ export const upcomingShowsQuery = defineQuery(`
     venue,
     ticketUrl,
     status,
-    "artist": artist->name
+    "artist": coalesce(artist->name, externalArtistName)
   }
 `);
 
@@ -223,7 +223,7 @@ export const showsPageQuery = defineQuery(`
       venue,
       ticketUrl,
       status,
-      "artist": artist->name
+      "artist": coalesce(artist->name, externalArtistName)
     },
     "past": *[_type == "show" && date < $now] | order(date desc)[0...6]{
       _id,
@@ -231,7 +231,7 @@ export const showsPageQuery = defineQuery(`
       date,
       city,
       venue,
-      "artist": artist->name
+      "artist": coalesce(artist->name, externalArtistName)
     }
   }
 `);
@@ -246,7 +246,7 @@ export const paginatedShowsPageQuery = defineQuery(`
       venue,
       ticketUrl,
       status,
-      "artist": artist->name
+      "artist": coalesce(artist->name, externalArtistName)
     },
     "past": *[_type == "show" && date < $now] | order(date desc)[$start...$end]{
       _id,
@@ -254,7 +254,7 @@ export const paginatedShowsPageQuery = defineQuery(`
       date,
       city,
       venue,
-      "artist": artist->name
+      "artist": coalesce(artist->name, externalArtistName)
     },
     "pastTotal": count(*[_type == "show" && date < $now])
   }

@@ -1,4 +1,11 @@
-﻿import {defineField, defineType} from "sanity";
+import {defineField, defineType} from "sanity";
+
+type ShowDocument = {
+  artist?: {
+    _ref?: string;
+  };
+  externalArtistName?: string;
+};
 
 export const showType = defineType({
   name: "show",
@@ -16,7 +23,35 @@ export const showType = defineType({
       title: "Artista",
       type: "reference",
       to: [{type: "artist"}],
-      validation: (Rule) => Rule.required(),
+      description: "Opcional. Úsalo para artistas que ya pertenecen al catálogo.",
+      validation: (Rule) =>
+        Rule.custom((value, context) => {
+          const hasExternalArtistName = Boolean(
+            (context.document as ShowDocument | undefined)?.externalArtistName?.trim(),
+          );
+
+          if (value?._ref && hasExternalArtistName) {
+            return "Usa un artista del catálogo o un nombre externo, pero no ambos.";
+          }
+
+          return true;
+        }),
+    }),
+    defineField({
+      name: "externalArtistName",
+      title: "Grupo o proyecto externo",
+      type: "string",
+      description: "Opcional. Úsalo cuando la fecha sea de un proyecto que no pertenece al sello.",
+      validation: (Rule) =>
+        Rule.custom((value, context) => {
+          const hasArtist = Boolean((context.document as ShowDocument | undefined)?.artist?._ref);
+
+          if (value?.trim() && hasArtist) {
+            return "Usa un artista del catálogo o un nombre externo, pero no ambos.";
+          }
+
+          return true;
+        }),
     }),
     defineField({
       name: "date",
@@ -51,7 +86,15 @@ export const showType = defineType({
   preview: {
     select: {
       title: "title",
-      subtitle: "city",
+      artist: "artist.name",
+      externalArtistName: "externalArtistName",
+      city: "city",
+    },
+    prepare({title, artist, externalArtistName, city}) {
+      return {
+        title,
+        subtitle: [artist ?? externalArtistName, city].filter(Boolean).join(" - "),
+      };
     },
   },
 });

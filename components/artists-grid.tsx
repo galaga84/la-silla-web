@@ -58,6 +58,7 @@ export async function ArtistsGrid({currentPage, pageSize}: ArtistsGridProps) {
                 alt={artist.name}
                 src={urlFor(artist.image).width(1200).height(1600).url()}
                 fill
+                sizes="(min-width: 1280px) 33vw, (min-width: 640px) 50vw, 100vw"
                 className="absolute inset-0 h-full w-full object-cover opacity-75 transition-opacity duration-300 group-hover:opacity-50"
               />
             ) : null}

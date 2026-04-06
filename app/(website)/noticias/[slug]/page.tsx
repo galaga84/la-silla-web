@@ -61,6 +61,7 @@ export default async function NewsDetailPage({params}: NewsPageProps) {
               src={urlFor(post.mainImage).width(1600).height(900).url()}
               alt={post.title}
               fill
+              sizes="(min-width: 1024px) 56rem, 100vw"
               className="object-cover"
             />
           </div>

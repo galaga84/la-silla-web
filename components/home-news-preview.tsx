@@ -67,6 +67,7 @@ export async function HomeNewsPreview() {
                       src={urlFor(post.mainImage).width(1200).height(700).url()}
                       alt={post.title}
                       fill
+                      sizes="(min-width: 1024px) 33vw, 100vw"
                       className="object-cover transition duration-500 ease-out group-hover:scale-[1.04]"
                     />
                   ) : null}

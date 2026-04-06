@@ -89,6 +89,7 @@ export async function VideosGrid({currentPage, pageSize}: VideosGridProps) {
                     src={urlFor(video.thumbnail).width(1280).height(720).url()}
                     alt={video.title}
                     fill
+                    sizes="(min-width: 1280px) 33vw, (min-width: 768px) 50vw, 100vw"
                     className="object-cover opacity-70"
                   />
                 ) : (

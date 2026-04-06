@@ -47,6 +47,7 @@ export default async function ReleaseDetailPage({params}: ReleasePageProps) {
               src={urlFor(release.cover).width(1200).height(1200).url()}
               alt={release.title}
               fill
+              sizes="(min-width: 1024px) 360px, 100vw"
               className="object-cover"
             />
           ) : null}

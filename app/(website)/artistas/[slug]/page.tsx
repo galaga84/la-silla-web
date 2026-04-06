@@ -77,6 +77,7 @@ export default async function ArtistDetailPage({params}: ArtistPageProps) {
               src={urlFor(artist.image).width(1200).height(1500).url()}
               alt={artist.name}
               fill
+              sizes="(min-width: 1024px) 420px, 100vw"
               className="object-cover"
             />
           ) : null}
