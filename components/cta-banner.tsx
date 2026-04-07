@@ -80,7 +80,7 @@ export function CtaBanner() {
       <div className="container-site relative z-10 grid min-h-[80svh] gap-10 py-16 lg:grid-cols-[minmax(0,1.1fr)_minmax(320px,0.9fr)] lg:items-center">
         <div>
           
-          <h2 className="mt-4 max-w-3xl text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl">
+          <h2 className="heading-lg mt-4 max-w-3xl text-gray-900 sm:text-5xl">
             {"Entérate de nuestras noticias, lanzamientos y movimiento editorial."}
           </h2>
           <p className="body-lg mt-5 max-w-2xl text-gray-600">
